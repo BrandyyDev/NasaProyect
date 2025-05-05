@@ -2,6 +2,38 @@ const fetch = require('node-fetch');
 const jwtUtils = require('../utils/jwtUtils'); 
 const apiKey = process.env.NASA_API_KEY;
 
+/**
+ * @swagger
+ * /nasa/apod:
+ *   get:
+ *     summary: Obtiene la imagen o video del día de la NASA (APOD)
+ *     description: Devuelve los datos de la APOD de la NASA para una fecha específica o un rango de fechas. Se requiere autenticación mediante JWT en el header Authorization.
+ *     parameters:
+ *       - in: query
+ *         name: date
+ *         schema:
+ *           type: string
+ *         description: Fecha específica en formato YYYY-MM-DD.
+ *       - in: query
+ *         name: start_date
+ *         schema:
+ *           type: string
+ *         description: Fecha de inicio para obtener un rango (formato YYYY-MM-DD).
+ *       - in: query
+ *         name: end_date
+ *         schema:
+ *           type: string
+ *         description: Fecha final para obtener un rango (formato YYYY-MM-DD).
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Datos de la APOD obtenidos exitosamente.
+ *       401:
+ *         description: Acceso no permitido o token inválido/expirado.
+ *       500:
+ *         description: Error al obtener datos del APOD de la NASA.
+ */
 async function getApod(req, res) {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
@@ -19,15 +51,12 @@ async function getApod(req, res) {
     return res.status(401).json({ message: 'Token inválido o expirado.' });
   }
 
-
   const { date, start_date, end_date } = req.query;
   let apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
 
- 
   if (start_date && end_date) {
     apiUrl += `&start_date=${start_date}&end_date=${end_date}`;
   } else if (date) {
-    // Si se envía una fecha única
     apiUrl += `&date=${date}`;
   }
 

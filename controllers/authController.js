@@ -2,73 +2,145 @@ const userModel = require('../models/userModel');
 const passwordUtils = require('../utils/passwordUtils');
 const jwtUtils = require('../utils/jwtUtils');
 
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Registra un nuevo usuario
+ *     description: Crea un usuario con email y contraseña y devuelve un token.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: usuario@example.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *     responses:
+ *       201:
+ *         description: "Usuario registrado exitosamente"
+ *       400:
+ *         description: "Datos faltantes: email o password"
+ *       409:
+ *         description: "El usuario con este correo electrónico ya existe."
+ *       500:
+ *         description: "Error al registrar el usuario."
+ */
 async function registerUser(req, res) {
-  console.log('[REGISTER] Inicio de registro de usuario');
   const { email, password } = req.body;
 
   if (!email || !password) {
-    console.log('[REGISTER] Datos faltantes: email o password');
     return res.status(400).json({ message: 'El correo electrónico y la contraseña son obligatorios.' });
   }
 
   try {
     const existingUser = await userModel.getUserByEmail(email);
     if (existingUser) {
-      console.log(`[REGISTER] Usuario ya existente: ${email}`);
       return res.status(409).json({ message: 'El usuario con este correo electrónico ya existe.' });
     }
 
     const hashedPassword = await passwordUtils.hashPassword(password);
     const newUser = await userModel.createUser(email, hashedPassword);
-    const token = jwtUtils.generateToken({ userId: newUser.id, email: newUser.email });
 
-    console.log(`[REGISTER] Usuario registrado exitosamente: ${email}`);
+    const token = jwtUtils.generateToken({ userId: newUser.id, email: newUser.email });
     res.status(201).json({ message: 'Usuario registrado exitosamente', token });
   } catch (error) {
-    console.error('[REGISTER] Error al registrar el usuario:', error);
+    console.error('Error al registrar el usuario:', error);
     res.status(500).json({ message: 'Error al registrar el usuario.' });
   }
 }
 
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Inicio de sesión de usuario
+ *     description: Verifica las credenciales y devuelve un token junto con los datos del usuario.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: usuario@example.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *     responses:
+ *       200:
+ *         description: "Inicio de sesión exitoso"
+ *       400:
+ *         description: "Datos faltantes: email o password"
+ *       401:
+ *         description: "Credenciales inválidas."
+ *       500:
+ *         description: "Error al iniciar sesión."
+ */
 async function loginUser(req, res) {
-  console.log('[LOGIN] Inicio de sesión');
   const { email, password } = req.body;
   if (!email || !password) {
-    console.log('[LOGIN] Datos faltantes: email o password');
     return res.status(400).json({ message: 'El correo electrónico y la contraseña son obligatorios.' });
   }
 
   try {
     const user = await userModel.getUserByEmail(email);
     if (!user) {
-      console.log(`[LOGIN] Usuario no encontrado: ${email}`);
       return res.status(401).json({ message: 'Credenciales inválidas.' });
     }
 
     const isPasswordValid = await passwordUtils.comparePassword(password, user.password_hash);
     if (!isPasswordValid) {
-      console.log(`[LOGIN] Contraseña inválida para el usuario: ${email}`);
       return res.status(401).json({ message: 'Credenciales inválidas.' });
     }
 
     const token = jwtUtils.generateToken({ userId: user.id, email: user.email });
-    console.log(`[LOGIN] Inicio de sesión exitoso para el usuario: ${email}`);
     res.json({ message: 'Inicio de sesión exitoso', token, user: { id: user.id, email: user.email } });
   } catch (error) {
-    console.error('[LOGIN] Error al iniciar sesión:', error);
+    console.error('Error al iniciar sesión:', error);
     res.status(500).json({ message: 'Error al iniciar sesión.' });
   }
 }
 
+/**
+ * @swagger
+ * /logout:
+ *   post:
+ *     summary: Cierre de sesión
+ *     description: Limpia el token y cierra la sesión del usuario.
+ *     responses:
+ *       200:
+ *         description: "Cierre de sesión exitoso."
+ */
 async function logoutUser(req, res) {
-  console.log('[LOGOUT] Solicitud de cierre de sesión');
   res.clearCookie('token');
-  console.log('[LOGOUT] Token limpiado. Cierre de sesión exitoso.');
   return res.status(200).json({ message: 'Cierre de sesión exitoso' });
 }
 
+/**
+ * @swagger
+ * /protected:
+ *   get:
+ *     summary: Acceso a datos protegidos
+ *     description: Devuelve datos protegidos solo para usuarios autenticados.
+ *     responses:
+ *       200:
+ *         description: "Datos protegidos obtenidos exitosamente."
+ */
 async function getProtectedData(req, res) {
-  console.log('[PROTECTED] Acceso a datos protegidos para el usuario:', req.user && req.user.email);
   res.json({ message: 'Estos son datos protegidos', user: req.user });
 }
 
