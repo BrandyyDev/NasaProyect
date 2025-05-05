@@ -19,7 +19,7 @@ async function registerUser(req, res) {
     const newUser = await userModel.createUser(email, hashedPassword);
 
     const token = jwtUtils.generateToken({ userId: newUser.id, email: newUser.email });
-    res.status(201).json({ message: 'Usuario registrado exitosamente', token });
+    res.status(201).json({ message: 'Usuario registrado exitosamente' });
   } catch (error) {
     console.error('Error al registrar el usuario:', error);
     res.status(500).json({ message: 'Error al registrar el usuario.' });
