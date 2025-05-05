@@ -1,4 +1,4 @@
-const poolConnection = require('../config/database'); // Asegúrate de configurar la conexión a la base de datos en db.js
+const poolConnection = require('../config/database'); 
 
 async function createUser(email, passwordHash) {
   try {

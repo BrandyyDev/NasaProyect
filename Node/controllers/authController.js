@@ -51,18 +51,22 @@ async function loginUser(req, res) {
   }
 }
 
-// Por simplicidad, el cierre de sesión en una aplicación basada en JWT
-// usualmente se maneja en el frontend descartando el token.
-// No se requiere una lógica explícita en el backend para invalidar el token
-// ya que su validez está determinada por su firma y expiración.
+async function logoutUser(req, res) {
+
+  res.clearCookie('token');
+
+  return res.status(200).json({ message: 'Cierre de sesión exitoso' });
+}
+
 
 async function getProtectedData(req, res) {
-  // req.user contiene la información del usuario autenticado gracias al middleware
+
   res.json({ message: 'Estos son datos protegidos', user: req.user });
 }
 
 module.exports = {
   registerUser,
   loginUser,
+  logoutUser,
   getProtectedData,
 };

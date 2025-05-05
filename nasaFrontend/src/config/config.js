@@ -7,6 +7,8 @@ const config = {
         auth: {
             register: '/register',
             login: '/login',
+            logout: '/logout',
+            protected: '/protected',
         },
     }
 };

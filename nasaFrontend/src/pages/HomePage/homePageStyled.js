@@ -1,18 +1,26 @@
 import styled from 'styled-components';
 
+
 export const HomePageContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: #333;
 
   h1 {
     text-align: center;
-    margin-bottom: 2rem;
     font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 `;
+
 
 export const SearchContainer = styled.div`
   display: flex;
@@ -23,13 +31,13 @@ export const SearchContainer = styled.div`
   .search-mode-toggle {
     display: flex;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 
     button {
       background-color: #0077cc;
       color: #fff;
       border: none;
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem;
       border-radius: 4px;
       font-size: 1rem;
       cursor: pointer;
@@ -42,10 +50,12 @@ export const SearchContainer = styled.div`
     }
   }
 
-  .single-search, .range-search {
+  .single-search,
+  .range-search {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
+    flex-wrap: wrap;
 
     input {
       padding: 0.5rem;
@@ -53,10 +63,14 @@ export const SearchContainer = styled.div`
       border-radius: 4px;
       font-size: 1rem;
       width: 200px;
+
+      @media (max-width: 480px) {
+        width: 100%;
+      }
     }
   }
 
-  > button {
+  button {
     background-color: #28a745;
     color: #fff;
     border: none;
@@ -79,47 +93,20 @@ export const SearchContainer = styled.div`
   }
 `;
 
-export const APODCard = styled.div`
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin: 1rem 0;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-  h2 {
-    margin-top: 0;
-    font-size: 1.75rem;
-  }
 
-  p {
-    margin: 0.5rem 0;
-    font-size: 1rem;
-  }
 
-  img, iframe {
-    max-width: 100%;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-  }
-
-  @media (min-width: 768px) {
-    display: flex;
-    align-items: flex-start;
-
-    img, iframe {
-      flex: 1;
-      margin-right: 1rem;
-    }
-
-    div {
-      flex: 2;
-    }
-  }
-`;
 
 export const ErrorMessage = styled.p`
-  color: red;
+  color: #d9534f;
+  font-weight: bold;
   text-align: center;
   font-size: 1.2rem;
+`;
+
+export const CardsContainer = styled.div`
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  padding: 1rem;
 `;

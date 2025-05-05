@@ -16,8 +16,6 @@ const AuthPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Correo:', email, 'Contraseña:', password);
-    console.log(email)
     dispatch(loginUser(email, password, handleSuccess)); 
   };
 

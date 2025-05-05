@@ -14,8 +14,8 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   token: null,
-  loading: false, // Indica si la petición está en curso
-  error: null,    // Almacena mensajes de error
+  loading: false, 
+  error: null,   
 };
 
 const authReducer = (state = initialState, action) => {

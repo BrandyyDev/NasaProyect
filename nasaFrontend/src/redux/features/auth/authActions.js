@@ -120,3 +120,49 @@ export const loginUser = (email, password, done) => {
     }
   };
 };
+
+
+export const logoutUserAction = () => {
+  return async (dispatch) => {
+    try {
+      const response = await apiCall(
+        `${config.apiBaseUrl}${config.endpoints.auth.logout}`, 
+        {}, 
+        "POST", 
+        false, 
+        false
+      );
+      if (response.status !== 200) {
+        alert(response.data.message || 'Error en el cierre de sesión.');
+        throw new Error(response.data.message || 'Error en el cierre de sesión.');
+      }
+      localStorage.removeItem('token');
+      dispatch(logout());
+    } catch (error) {
+      alert(error.message || 'Error en el cierre de sesión.');
+    }
+  };
+};
+
+
+export const getProtectedUserData = () => {
+  return async (dispatch, getState) => {
+
+    try {
+      const response = await apiCall(
+        `${config.apiBaseUrl}${config.endpoints.auth.protected}`, 
+        {}, 
+        "GET", 
+        true,  
+        false
+      );
+      if (response.status !== 200) {
+        alert(response.data.message || 'Error al obtener datos protegidos.');
+        throw new Error(response.data.message || 'Error al obtener datos protegidos.');
+      }
+      return response.data;
+    } catch (error) {
+      alert(error.message || 'Error al obtener datos protegidos.');
+    }
+  };
+};
