@@ -2,6 +2,19 @@
 
 Este proyecto es una aplicación web full-stack desarrollada como parte de una prueba técnica. Implementa un sistema de autenticación de usuarios, interactúa con un backend de Node.js/Express y consume la API pública de la NASA (Astronomy Picture of the Day - APOD).
 
+## Justificacion del desarrollo 
+PostgreSQL: Elegido por su robustez, confiabilidad y escalabilidad para la gestión de datos de usuario y potencial crecimiento.
+
+Hosts (Render, Vercel, Railway): Seleccionados por su facilidad de despliegue, integración continua y opciones gratuitas/de bajo costo, optimizando el desarrollo y despliegue de cada parte de la aplicación.
+
+API de la NASA en Node (con Token): Se implementó una API intermedia en Node.js para la NASA con requerimiento de token para aumentar la seguridad de la aplicación y controlar el acceso a la API externa.
+
+Buscadores y Paginador: Se desarrollaron buscadores por rango y normal en el backend de la NASA para facilitar la implementación de un paginador eficiente en el frontend, mejorando la experiencia del usuario al interactuar con los datos de la API.
+
+Redux en React: Utilizado para una gestión de estado global predecible y organizada, crucial para la autenticación y la escalabilidad de la aplicación.
+
+
+
 ## Requisitos Técnicos
 
 - **Frontend:** React, Redux, Styled Components, TypeScript
@@ -53,3 +66,9 @@ Este proyecto es una aplicación web full-stack desarrollada como parte de una p
 
 - Base de datos: Users
 - Servidor corriendo en: Railway
+  
+### Documentacion (Swagger)
+- Documentacion : `https://nasaproyect.onrender.com/api-docs/`
+
+
+
