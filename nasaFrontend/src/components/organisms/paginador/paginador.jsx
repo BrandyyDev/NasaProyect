@@ -26,7 +26,7 @@ const PageButton = styled.button`
 const Paginator = ({ items, renderItem, itemsPerPage = 10 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   
-  // Si la cantidad total de items es menor o igual a itemsPerPage, no mostramos paginador
+
   if (!items || items.length <= itemsPerPage) {
     return (
       <>
