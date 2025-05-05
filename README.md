@@ -1,46 +1,12 @@
-# Prueba Técnica Full Stack
+# React + Vite
 
-Este proyecto es una aplicación web full-stack desarrollada como parte de una prueba técnica. Implementa un sistema de autenticación de usuarios, interactúa con un backend de Node.js/Express y consume la API pública de la NASA (Astronomy Picture of the Day - APOD).
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Requisitos Técnicos
+Currently, two official plugins are available:
 
-- **Frontend:** React, Redux, Styled Components, TypeScript
-- **Backend:** Node.js, Express, PostgreSQL, JWT, bcrypt
-- **API Pública:** NASA APOD API
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Funcionalidades Implementadas
+## Expanding the ESLint configuration
 
-### Sistema de Autenticación
-
-- Registro de usuarios con correo electrónico y contraseña.
-- Inicio de sesión con credenciales.
-- Cierre de sesión.
-- Gestión de sesiones con JWT.
-- Rutas protegidas accesibles solo para usuarios autenticados.
-
-### Servicios Backend
-
-- Endpoints para:
-  - Registro: `/api/register`
-  - Inicio de sesión: `/api/login`
-  - Ruta protegida: `/api/protected`
-  - Conexión a la API de la NASA: `/api/nasa/apod`
-  - Cierre de sesión: `/api/logout`
-- Almacenamiento seguro de datos de usuario (contraseñas hasheadas con bcrypt).
-- Base de datos PostgreSQL para almacenar información del usuario.
-
-### Integración de API Pública (NASA APOD)
-
-- Obtención y visualización de la imagen/video del día de la NASA en la página de inicio.
-- Funcionalidad para buscar la APOD por fecha.
-- Funcionalidad para buscar por rango de fecha.
-- Manejo de errores de la API.
-
-### Frontend (React)
-
-- Página de inicio mostrando la APOD.
-- Página de inicio de sesión/registro.
-- Navegación entre páginas con React Router.
-- Gestión de estado de autenticación con Redux.
-- Estilos con Styled Components.
-- Paginador
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
