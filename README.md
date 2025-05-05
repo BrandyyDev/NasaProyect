@@ -28,6 +28,8 @@ Este proyecto es una aplicación web full-stack desarrollada como parte de una p
   - Cierre de sesión: `/api/logout`
 - Almacenamiento seguro de datos de usuario (contraseñas hasheadas con bcrypt).
 - Base de datos PostgreSQL para almacenar información del usuario.
+- Serivdor Corriendo en: Render 
+- Host: `(https://nasaproyect.onrender.com/api)`
 
 ### Integración de API Pública (NASA APOD)
 
@@ -44,3 +46,10 @@ Este proyecto es una aplicación web full-stack desarrollada como parte de una p
 - Gestión de estado de autenticación con Redux.
 - Estilos con Styled Components.
 - Paginador
+- Servidor corriendo en: Vercel
+- Host: `[https://nasa-proyect-k3eg.vercel.app/]`
+
+### Base de Datos (Postgres)
+
+- Base de datos: Users
+- Servidor corriendo en: Railway
